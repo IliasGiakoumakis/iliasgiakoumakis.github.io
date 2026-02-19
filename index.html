@@ -2,25 +2,124 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <title>Το Bio μου</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilias Giakoumakis | Bio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f4; }
-        .card { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .links a { margin: 10px; text-decoration: none; color: #007bff; font-weight: bold; }
+        :root {
+            --primary-color: #2563eb;
+            --text-dark: #1f2937;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bio {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-contact {
+            display: inline-block;
+            margin-top: 2rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Hello, I'm Ilias Giakoumakis 👋</h1>
-        <p>I'm an undergraduate student at the University of Crete, in the Computer Science Department (CSD).</p>
-        <p>https://www.csd.uoc.gr/</p>
-        <hr>
-        <div class="links">
-            <a href="mailto:iliasggiakoumakis@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/ilias-giakoumakis-106580397/">LinkedIn</a>
-            <a href="https://github.com/IliasGiakoumakis7A24">GitHub</a>
+
+    <div class="container">
+        <img src="https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff&size=128" alt="Profile" class="profile-img">
+        
+        <h1>Ilias Giakoumakis</h1>
+        <p class="subtitle">Undergraduate CS Student @ UOC</p>
+        
+        <p class="bio">
+            I'm an undergraduate student at the University of Crete, in the Computer Science Department (CSD). 
+            Passionate about technology, software development, and learning new things.
+        </p>
+
+        <div class="social-links">
+            <a href="https://github.com/IliasGiakoumakis" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:YOUR_EMAIL@csd.uoc.gr"><i class="fas fa-envelope"></i></a>
         </div>
+
+        <a href="mailto:YOUR_EMAIL@csd.uoc.gr" class="btn-contact">Get in Touch</a>
     </div>
+
 </body>
 </html>
