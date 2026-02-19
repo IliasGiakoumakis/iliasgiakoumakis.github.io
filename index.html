@@ -9,117 +9,145 @@
     
     <style>
         :root {
-            --primary-color: #2563eb;
-            --text-dark: #1f2937;
-            --bg-light: #f8fafc;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-sub: #64748b;
+            --primary: #2563eb;
+            --shadow: rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --primary: #38bdf8;
+            --shadow: rgba(0,0,0,0.3);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--text-sub);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 6px var(--shadow);
         }
 
         .container {
-            background: white;
+            background: var(--bg-card);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px var(--shadow);
             max-width: 400px;
             width: 90%;
             text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
         }
 
         .profile-img {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            background: #e2e8f0;
             margin-bottom: 1.5rem;
             object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 4px solid var(--primary);
         }
 
-        h1 {
-            margin: 0.5rem 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .bio {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
+        h1 { margin: 0.5rem 0; font-size: 1.6rem; }
+        .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        
         .social-links {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            transition: color 0.2s;
+            color: var(--text-main);
+            font-size: 1.6rem;
+            transition: 0.2s;
         }
 
-        .social-links a:hover {
-            color: var(--primary-color);
-        }
+        .social-links a:hover { color: var(--primary); }
 
         .btn-contact {
             display: inline-block;
             margin-top: 2rem;
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
     </style>
 </head>
 <body>
 
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
+
     <div class="container">
-        <img src="https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff&size=128" alt="Profile" class="profile-img">
+        <img src="profile.jpg" alt="Ilias" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff'">
         
         <h1>Ilias Giakoumakis</h1>
         <p class="subtitle">Undergraduate CS Student @ UOC</p>
         
-        <p class="bio">
-            I'm an undergraduate student at the University of Crete, in the Computer Science Department (CSD). 
-            Passionate about technology, software development, and learning new things.
-        </p>
+        <p>I'm an undergraduate student at the University of Crete, in the Computer Science Department (CSD).</p>
 
         <div class="social-links">
             <a href="https://github.com/IliasGiakoumakis" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:YOUR_EMAIL@csd.uoc.gr"><i class="fas fa-envelope"></i></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=your-email@csd.uoc.gr" target="_blank">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
 
-        <a href="mailto:YOUR_EMAIL@csd.uoc.gr" class="btn-contact">Get in Touch</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=your-email@csd.uoc.gr" class="btn-contact" target="_blank">Send Message</a>
     </div>
 
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Έλεγχος αν ο χρήστης είχε επιλέξει κάτι πριν
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+    </script>
 </body>
 </html>
