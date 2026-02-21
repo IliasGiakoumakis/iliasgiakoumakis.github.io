@@ -234,39 +234,69 @@
         const canvas = document.getElementById('waveCanvas');
         const ctx = canvas.getContext('2d');
 
-        let animationId;
-        let offset = 0;
+        let particles = [];
+        const particleCount = 60; // Πόσες στήλες τελειών
+        const spacing = 40; // Απόσταση μεταξύ τους
 
-        function resize() {
+        function init() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: (i * (canvas.width / particleCount)) + 50,
+                    y: canvas.height / 2,
+                    baseY: canvas.height * 0.75, // Θέση στον άξονα Υ
+                    angle: i * 0.2
+                });
+            }
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-            // Επιλογή χρώματος ανάλογα με το theme
             const isDark = document.body.getAttribute('data-theme') === 'dark';
-            ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.4)' : 'rgba(37, 99, 235, 0.2)';
-            ctx.lineWidth = 2;
-    
+            ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.3)' : 'rgba(37, 99, 235, 0.15)';
+            ctx.fillStyle = isDark ? 'rgba(56, 189, 248, 0.6)' : 'rgba(37, 99, 235, 0.4)';
+            ctx.lineWidth = 1;
+
             ctx.beginPath();
-            const midY = canvas.height * 0.7; // Το κύμα θα είναι στο κάτω μέρος
-    
-            for (let x = 0; x < canvas.width; x++) {
-                // Μαθηματική συνάρτηση ημιτόνου: y = Amplitude * sin(Frequency * x + Offset)
-                const y = midY + Math.sin(x * 0.005 + offset) * 30 + Math.sin(x * 0.01 + offset) * 10;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+        
+                // Μαθηματική κίνηση με συνδυασμό Sin και Cos για φυσική ροή
+                p.y = p.baseY + Math.sin(p.angle) * 40 + Math.cos(p.angle * 0.5) * 20;
+                p.angle += 0.02; // Ταχύτητα κύματος
+
+                // Σχεδίαση της τελείας
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Σύνδεση με την επόμενη τελεία (δημιουργία πλέγματος)
+                if (i > 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i-1].x, particles[i-1].y);
+                    ctx.lineTo(p.x, p.y);
+                    ctx.stroke();
+                }
+        
+                // Προσθήκη κάθετων γραμμών που "σβήνουν" προς τα κάτω
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p.x, p.y + 100);
+                const gradient = ctx.createLinearGradient(0, p.y, 0, p.y + 100);
+                gradient.addColorStop(0, isDark ? 'rgba(56, 189, 248, 0.2)' : 'rgba(37, 99, 235, 0.1)');
+                gradient.addColorStop(1, 'transparent');
+                ctx.strokeStyle = gradient;
+                ctx.stroke();
             }
     
-            ctx.stroke();
-            offset += 0.03; // Ταχύτητα κίνησης
-            animationId = requestAnimationFrame(draw);
+            requestAnimationFrame(draw);
         }
 
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', init);
+        init();
         draw();
     </script>
 </body>
