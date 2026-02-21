@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ilias Giakoumakis | Portfolio</title>
+    <title>Ilias Giakoumakis</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -38,7 +38,7 @@
         .fa-linkedin { color: var(--icon-linkedin); }
         .fa-envelope { color: var(--icon-gmail); }
         
-        /* Το δικό σου εικονίδιο CSD */
+        /* Το δικό μου εικονίδιο CSD */
         .csd-custom-icon { width: 35px; height: 35px; object-fit: contain; }
 
         h2 { font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 10px; margin-bottom: 1.5rem; }
@@ -63,7 +63,7 @@
 
     <div class="section hero">
         <img src="me.png" alt="Ilias" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff&size=200'">
-        <h1>Ilias Giakoumakis</h1>
+        <h1 id="heroName">Ilias Giakoumakis</h1>
         <div class="subtitle" id="heroSubtitle">Computer Science Undergraduate @ UOC</div>
         
         <div class="social-links">
@@ -107,6 +107,7 @@
 
         const content = {
             el: {
+                name: "Ηλίας Γιακουμάκης",
                 subtitle: "Προπτυχιακός Φοιτητής Επιστήμης Υπολογιστών @ ΠΚ",
                 aboutTitle: "Σχετικά με μένα",
                 aboutText: "Γεια! Είμαι ο Ηλίας, φοιτητής στο CSD του Πανεπιστημίου Κρήτης. Ενδιαφέρομαι για software development και AI.",
@@ -125,6 +126,7 @@
                 ]
             },
             en: {
+                name: "Ilias Giakoumakis",
                 subtitle: "Computer Science Undergraduate @ UOC",
                 aboutTitle: "About Me",
                 aboutText: "Hi! I am Ilias, a CS student at the University of Crete. Passionate about software development and AI.",
@@ -146,6 +148,7 @@
 
         function updateUI() {
             const data = content[currentLang];
+            document.getElementById('heroName').innerText = data.name;
             document.getElementById('heroSubtitle').innerText = data.subtitle;
             document.getElementById('aboutTitle').innerHTML = `<i class="fas fa-user"></i> ${data.aboutTitle}`;
             document.getElementById('aboutText').innerText = data.aboutText;
