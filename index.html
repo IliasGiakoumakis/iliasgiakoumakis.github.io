@@ -62,10 +62,31 @@
         .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: var(--text-sub); }
 
         footer { margin: 2rem 0; font-size: 0.8rem; color: var(--text-sub); text-align: center; }
+        #waveCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Για να είναι πίσω από τις κάρτες */
+            pointer-events: none; /* Για να μπορείς να πατάς τα κουμπιά */
+        }
+
+        /* Glassmorphism εφέ στις κάρτες για να φαίνεται το κύμα από πίσω */
+        .section {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="dark"] .section {
+            background: rgba(30, 41, 59, 0.7) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body>
-
+    <canvas id="waveCanvas"></canvas>
     <div class="controls">
         <button class="control-btn" onclick="toggleLanguage()" id="langBtn">EN</button>
         <button class="control-btn" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
@@ -210,6 +231,43 @@
         }
 
         updateUI();
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let animationId;
+        let offset = 0;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+            // Επιλογή χρώματος ανάλογα με το theme
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.4)' : 'rgba(37, 99, 235, 0.2)';
+            ctx.lineWidth = 2;
+    
+            ctx.beginPath();
+            const midY = canvas.height * 0.7; // Το κύμα θα είναι στο κάτω μέρος
+    
+            for (let x = 0; x < canvas.width; x++) {
+                // Μαθηματική συνάρτηση ημιτόνου: y = Amplitude * sin(Frequency * x + Offset)
+                const y = midY + Math.sin(x * 0.005 + offset) * 30 + Math.sin(x * 0.01 + offset) * 10;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+    
+            ctx.stroke();
+            offset += 0.03; // Ταχύτητα κίνησης
+            animationId = requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        draw();
     </script>
 </body>
 </html>
