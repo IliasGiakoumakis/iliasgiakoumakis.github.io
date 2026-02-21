@@ -21,11 +21,11 @@
 
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 0; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; }
 
-        /* Floating Theme Toggle */
-        .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--bg-card); border: 1px solid var(--text-sub); color: var(--text-main); padding: 12px; border-radius: 50%; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        /* Top Controls (Theme & Language) */
+        .controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
+        .control-btn { background: var(--bg-card); border: 1px solid var(--text-sub); color: var(--text-main); padding: 10px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; font-weight: bold; }
 
         .section { background: var(--bg-card); padding: 2rem; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 600px; width: 90%; margin-bottom: 2rem; transition: transform 0.2s; }
-        .section:hover { transform: scale(1.01); }
 
         /* Hero */
         .hero { text-align: center; }
@@ -33,62 +33,59 @@
         h1 { font-size: 1.8rem; margin: 1rem 0 0.2rem; }
         .subtitle { color: var(--primary); font-weight: 600; margin-bottom: 1.5rem; }
 
-        /* Social Icons with Colors */
-        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
-        .social-links a { font-size: 1.8rem; transition: transform 0.2s; }
+        /* Social Icons */
+        .social-links { display: flex; justify-content: center; gap: 1.2rem; margin-top: 1rem; flex-wrap: wrap; }
+        .social-links a { font-size: 1.8rem; transition: transform 0.2s; text-decoration: none; }
         .social-links a:hover { transform: translateY(-3px); }
         .fa-github { color: var(--icon-github); }
         .fa-linkedin { color: var(--icon-linkedin); }
         .fa-envelope { color: var(--icon-gmail); }
+        
+        /* CSD Logo Link */
+        .csd-link img { width: 32px; height: 32px; vertical-align: middle; border-radius: 4px; filter: grayscale(20%); }
+        .csd-link:hover img { filter: grayscale(0%); }
 
-        /* Clickable List Items */
+        /* List Items */
         h2 { font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 10px; margin-bottom: 1.5rem; }
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 12px; border-bottom: 1px solid var(--accent); cursor: pointer; transition: background 0.2s; }
         .list-item:hover { background: var(--accent); }
         .tag { background: var(--primary); color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
 
-        /* MODAL SYSTEM */
+        /* Modal */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-content { background-color: var(--bg-card); margin: 10% auto; padding: 2rem; border-radius: 24px; max-width: 500px; width: 85%; position: relative; animation: slideIn 0.3s ease-out; }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; font-weight: bold; cursor: pointer; color: var(--text-sub); }
+        .modal-content { background-color: var(--bg-card); margin: 10% auto; padding: 2rem; border-radius: 24px; max-width: 500px; width: 85%; position: relative; animation: slideIn 0.3s; }
+        @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: var(--text-sub); }
 
-        footer { margin-top: 2rem; font-size: 0.8rem; color: var(--text-sub); padding-bottom: 2rem; }
+        footer { margin-top: 2rem; font-size: 0.8rem; color: var(--text-sub); padding-bottom: 2rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
+    <div class="controls">
+        <button class="control-btn" onclick="toggleLanguage()" id="langBtn">EN</button>
+        <button class="control-btn" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
+    </div>
 
     <div class="section hero">
-        <img src="me.png" alt="Ilias" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff&size=200'">
+        <img src="profile.jpg" alt="Ilias" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Ilias+Giakoumakis&background=2563eb&color=fff&size=200'">
         <h1>Ilias Giakoumakis</h1>
-        <div class="subtitle">Computer Science Undergraduate @ UOC</div>
+        <div class="subtitle" id="heroSubtitle">Computer Science Undergraduate @ UOC</div>
+        
         <div class="social-links">
-            <a href="https://github.com/IliasGiakoumakis" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=your-email@csd.uoc.gr" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/IliasGiakoumakis" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=your-email@csd.uoc.gr" target="_blank" title="Gmail"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.csd.uoc.gr/" target="_blank" class="csd-link" title="CSD UOC">
+                <img src="https://www.csd.uoc.gr/images/logos/csd_logo_el.png" alt="CSD Logo" onerror="this.src='https://www.uoc.gr/images/uoc_logo_el.png'">
+            </a>
         </div>
     </div>
 
     <div class="section">
-        <h2><i class="fas fa-graduation-cap"></i> Courses (Click for info)</h2>
-        <div class="list-item" onclick="openModal('CS100', 'Εισαγωγή στην Επιστήμη Υπολογιστών', 'Βασικές αρχές, αρχιτεκτονική υπολογιστών και αναπαράσταση δεδομένων. <br><br><b>Grade:</b> 10')">
-            <span>Εισαγωγή στην Επιστήμη Υπολογιστών</span>
-            <span class="tag">Info</span>
-        </div>
-        <div class="list-item" onclick="openModal('CS150', 'Προγραμματισμός C/C++', 'Εκμάθηση της γλώσσας C και C++, διαχείριση μνήμης και αντικειμενοστραφής προγραμματισμός.')">
-            <span>Προγραμματισμός (C/C++)</span>
-            <span class="tag">Info</span>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2><i class="fas fa-certificate"></i> Certifications</h2>
-        <div class="list-item" onclick="openModal('CERT1', 'Google AI Seminar 2025', 'Παρακολούθηση σεμιναρίου σχετικά με το Generative AI και τα Large Language Models (LLMs).')">
-            <span>Google AI Seminar</span>
-            <span class="tag">View</span>
-        </div>
+        <h2 id="coursesTitle"><i class="fas fa-graduation-cap"></i> Courses</h2>
+        <div id="coursesList">
+            </div>
     </div>
 
     <div id="infoModal" class="modal">
@@ -96,29 +93,69 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 id="modalTitle" style="border:none; padding:0;">Title</h2>
             <hr style="border: 0; border-top: 1px solid var(--accent); margin: 1rem 0;">
-            <p id="modalDescription">Description goes here...</p>
+            <p id="modalDescription">Description...</p>
         </div>
     </div>
 
-    <footer>© 2026 Ilias Giakoumakis • UOC Computer Science</footer>
+    <footer><span id="footerText">© 2026 Ilias Giakoumakis • UOC Computer Science</span></footer>
 
     <script>
+        let currentLang = 'el';
+
+        const content = {
+            el: {
+                subtitle: "Προπτυχιακός Φοιτητής Επιστήμης Υπολογιστών @ ΠΚ",
+                coursesTitle: "Μαθήματα (Κλικ για πληροφορίες)",
+                footer: "© 2026 Ηλίας Γιακουμάκης • Επιστήμη Υπολογιστών ΠΚ",
+                langBtn: "EN",
+                courses: [
+                    { id: 'CS101', title: 'Εισαγωγή στην Επιστήμη Υπολογιστών', desc: 'Βασικές αρχές, αρχιτεκτονική υπολογιστών και αναπαράσταση δεδομένων. <br><br><b>Βαθμός:</b> 10' },
+                    { id: 'CS150', title: 'Προγραμματισμός C/C++', desc: 'Εκμάθηση της γλώσσας C και C++, διαχείριση μνήμης και αντικειμενοστραφής προγραμματισμός.' }
+                ]
+            },
+            en: {
+                subtitle: "Computer Science Undergraduate @ UOC",
+                coursesTitle: "Courses (Click for info)",
+                footer: "© 2026 Ilias Giakoumakis • UOC Computer Science",
+                langBtn: "GR",
+                courses: [
+                    { id: 'CS101', title: 'Introduction to Computer Science', desc: 'Core principles, computer architecture, and data representation. <br><br><b>Grade:</b> 10' },
+                    { id: 'CS150', title: 'Programming C/C++', desc: 'Learning C and C++, memory management, and Object-Oriented Programming.' }
+                ]
+            }
+        };
+
+        function updateUI() {
+            const data = content[currentLang];
+            document.getElementById('heroSubtitle').innerText = data.subtitle;
+            document.getElementById('coursesTitle').innerHTML = `<i class="fas fa-graduation-cap"></i> ${data.coursesTitle}`;
+            document.getElementById('footerText').innerText = data.footer;
+            document.getElementById('langBtn').innerText = data.langBtn;
+
+            const list = document.getElementById('coursesList');
+            list.innerHTML = '';
+            data.courses.forEach(course => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.onclick = () => openModal(course.title, course.desc);
+                item.innerHTML = `<span>${course.title}</span><span class="tag">${currentLang === 'el' ? 'Πληροφορίες' : 'Info'}</span>`;
+                list.appendChild(item);
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'el' ? 'en' : 'el';
+            updateUI();
+        }
+
         // Modal Logic
-        function openModal(id, title, desc) {
+        function openModal(title, desc) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalDescription').innerHTML = desc;
             document.getElementById('infoModal').style.display = "block";
         }
-
-        function closeModal() {
-            document.getElementById('infoModal').style.display = "none";
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            let modal = document.getElementById('infoModal');
-            if (event.target == modal) { closeModal(); }
-        }
+        function closeModal() { document.getElementById('infoModal').style.display = "none"; }
+        window.onclick = (e) => { if(e.target == document.getElementById('infoModal')) closeModal(); }
 
         // Theme Toggle Logic
         function toggleTheme() {
@@ -127,17 +164,14 @@
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 icon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
             } else {
                 body.setAttribute('data-theme', 'dark');
                 icon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
             }
         }
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
-        }
+
+        // Initialize
+        updateUI();
     </script>
 </body>
 </html>
